@@ -1,11 +1,12 @@
 import { lazy, Suspense } from "react";
-import { createRouter, createRoute, createRootRoute, redirect } from "@tanstack/react-router";
+import { createRouter, createRoute, createRootRoute, redirect, stripSearchParams } from "@tanstack/react-router";
 import { AppShell } from "./shell";
 import { Skeleton } from "@/components/ui/skeleton";
 const Workbench = lazy(() => import("@/features/guide/index"));
 const root = createRootRoute({
   component: AppShell,
   validateSearch: (s: Record<string, unknown>) => ({ q: typeof s.q === "string" ? s.q : "", view: typeof s.view === "string" ? s.view : "projects" }),
+  search: { middlewares: [stripSearchParams({ q: "", view: "projects" })] },
   notFoundComponent: () => <div className="p-8">页面不存在，请返回工作台。</div>,
 });
 const routes = [createRoute({ getParentRoute: () => root, path: "/", component: () => <Suspense fallback={<Skeleton className="m-6 h-80" />}><Workbench /></Suspense> })];

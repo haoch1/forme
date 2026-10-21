@@ -962,7 +962,7 @@ html:has(.config-workbench) { overflow:hidden; scrollbar-gutter:auto; }
 .editor-header .header-right { gap:12px; }
 .editor-header .local-indicator { margin-right:4px; }
 .config-workbench { flex:1; min-height:0; padding:4px 16px 16px; overflow:hidden; background:color-mix(in oklab,var(--muted) 45%,var(--background)); }
-.config-layout { height:100%; min-height:0; grid-template-columns:336px minmax(0,1fr); gap:16px; background:transparent; }
+.config-layout { height:100%; min-height:0; grid-template-columns:368px minmax(0,1fr); gap:16px; background:transparent; }
 .config-controls, .config-preview { position:relative; top:auto; height:100%; min-height:0; border:1px solid var(--border); border-radius:var(--radius-xl); background:var(--background); overscroll-behavior:contain; scrollbar-gutter:stable; scrollbar-width:thin; }
 .config-controls { overflow-y:auto; }
 .config-controls-header { min-height:60px; padding:12px 16px; gap:8px; border-bottom:1px solid var(--border); }
@@ -986,10 +986,10 @@ html:has(.config-workbench) { overflow:hidden; scrollbar-gutter:auto; }
 .common-option-section { padding-block:14px 20px; }
 .common-option-trigger[data-slot=button] { background:transparent; padding:0; margin:0 0 14px; min-height:28px; font-size:13px; }
 .common-option-section [data-slot=field-group] { gap:18px; padding:0; }
-.common-option-section .preset-field { display:grid; grid-template-columns:70px minmax(0,1fr); column-gap:10px; row-gap:8px; align-items:center; }
-.common-option-section .preset-field > [data-slot=field-label] { margin:0; }
-.common-option-section .preset-field > [data-slot=field-description] { grid-column:1/-1; }
-.common-option-section .preset-field:is([data-option-field=font],[data-option-field=radius]) { grid-template-columns:minmax(0,1fr); }
+.common-option-section .preset-field { flex-direction:row; flex-wrap:wrap; gap:8px 10px; align-items:center; }
+.common-option-section .preset-field > [data-slot=field-label] { width:70px; flex:0 0 70px; margin:0; }
+.common-option-section .preset-field > .option-buttons { width:max-content; max-width:100%; flex:0 1 auto; }
+.common-option-section .preset-field > [data-slot=field-description] { width:100%; flex-basis:100%; }
 .config-categories { gap:20px; }
 .config-category-list[data-slot=tabs-list] { height:36px; }
 .config-category-list > [data-slot=tabs-trigger] { padding-inline:6px; font-size:13px; }
@@ -1016,7 +1016,7 @@ html:has(.config-workbench) { overflow:hidden; scrollbar-gutter:auto; }
 .cards-demo, .cards-demo > .flex { gap:var(--ui-stack-gap,16px); }
 .config-preview .preview-content { margin:0; }
 @media(min-width:761px) and (max-width:1250px) {
-  .config-layout { grid-template-columns:312px minmax(0,1fr); gap:12px; }
+  .config-layout { grid-template-columns:336px minmax(0,1fr); gap:12px; }
   .preview-navigation { flex-wrap:wrap; gap:8px; }
   .config-preview-topbar { margin-left:auto; }
   .config-preview-topbar .device-label { display:none; }
