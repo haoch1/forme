@@ -1,0 +1,13 @@
+node_modules/
+dist/
+.env*
+!.env.example
+*.tsbuildinfo
+.sites/
+.openai/*.tar*
+.openai/*.zip
+references/upstream/
+.openai/
+public/downloads/
+deploy/*.local.*
+docs/*.local.*

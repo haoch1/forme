@@ -1,0 +1,12 @@
+node_modules
+dist
+.git
+.github
+.openai
+.sites
+.env*
+references
+public/downloads
+*.tsbuildinfo
+deploy/compose.yaml
+deploy/host-nginx.conf

@@ -1,0 +1,57 @@
+{
+  "lucide": {
+    "repository": "https://github.com/lucide-icons/lucide",
+    "version": "1.59.0",
+    "files": [
+      "dist/esm/icons/panels-top-left.mjs"
+    ],
+    "usage": "页面图标使用 lucide-react；favicon.svg 使用 PanelsTopLeft 路径并增加白色底板；保留 ISC 许可证。"
+  },
+  "tweakcn": {
+    "repository": "https://github.com/jnsahaj/tweakcn",
+    "commit": "a3b47b37cba97dd637de517aab52c45ec0f83456",
+    "files": [
+      "utils/theme-presets.ts",
+      "components/editor/control-section.tsx",
+      "components/editor/editor.tsx",
+      "components/editor/colors-tab-content.tsx",
+      "components/examples/cards/cookie-settings.tsx",
+      "components/examples/cards/report-issue.tsx"
+    ],
+    "usage": "主题预设直接抽取；编辑器、颜色分组及卡片结构移植并适配 shadcn/ui、中文和本地交互"
+  },
+  "shadcnAdmin": {
+    "repository": "https://github.com/satnaing/shadcn-admin",
+    "commit": "e16c87f213a5ba5e45964e9b67c792105ec74d26",
+    "files": [
+      "src/components/layout/main.tsx",
+      "src/features/tasks/components/tasks-table.tsx",
+      "src/features/settings/profile/profile-form.tsx"
+    ],
+    "usage": "页面布局、任务表格和表单组织结构适配；交互逻辑为本地版本"
+  },
+  "tailwind": {
+    "repository": "https://github.com/tailwindlabs/tailwindcss",
+    "version": "4.3.3",
+    "files": [
+      "theme.css"
+    ],
+    "usage": "官方色阶用于强调色与 Zinc/Slate/Gray/Stone 中性色预设；按 shadcn 语义变量配对，分别提供明暗配色；保留 MIT 许可。"
+  },
+  "shadcn": {
+    "repository": "https://github.com/shadcn-ui/ui",
+    "generator": "shadcn 4.22.1",
+    "style": "radix-vega",
+    "license": "MIT",
+    "usage": "28 个官方 CLI registry 组件逐文件核对；20 个与官方源码一致，8 个仅保留显式视觉过渡、方向参数转发、可访问名称、中文关闭文案及语义遮罩变量补丁。预设在 components/preset-controls.tsx 与 design-system/preset-controls.css 组合，详见 docs/component-policy.md 与 shadcn-components.json。"
+  },
+  "radixColors": {
+    "repository": "https://github.com/radix-ui/colors",
+    "commit": "dbdb85470547c7d34b9001f48fddb08ded335979",
+    "files": [
+      "src/dark.ts"
+    ],
+    "license": "MIT",
+    "usage": "经典黑白暗色使用官方 grayDark 色阶：2 为页面底色，3 为卡片与侧栏，4/5 为控件与选中，6 为分隔，7 为输入边框，8 为焦点，11/12 为文字。仅映射语义主题变量，不增加依赖。"
+  }
+}

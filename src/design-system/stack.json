@@ -1,0 +1,97 @@
+[
+  {
+    "name": "react",
+    "role": "UI 框架",
+    "version": "19.3.1"
+  },
+  {
+    "name": "typescript",
+    "role": "类型系统",
+    "version": "5.9.3"
+  },
+  {
+    "name": "vite",
+    "role": "构建",
+    "version": "8.3.4"
+  },
+  {
+    "name": "tailwindcss",
+    "role": "样式",
+    "version": "4.3.3"
+  },
+  {
+    "name": "radix-ui",
+    "role": "基础交互",
+    "version": "1.8.1"
+  },
+  {
+    "name": "lucide-react",
+    "role": "图标",
+    "version": "1.59.0"
+  },
+  {
+    "name": "motion",
+    "role": "动画",
+    "version": "14.4.0"
+  },
+  {
+    "name": "react-resizable-panels",
+    "role": "可调分栏",
+    "version": "4.14.7"
+  },
+  {
+    "name": "@dnd-kit/react",
+    "role": "拖拽",
+    "version": "0.5.1"
+  },
+  {
+    "name": "zustand",
+    "role": "客户端状态",
+    "version": "5.0.15"
+  },
+  {
+    "name": "@tanstack/react-query",
+    "role": "异步数据",
+    "version": "5.104.5"
+  },
+  {
+    "name": "@tanstack/react-router",
+    "role": "路由",
+    "version": "1.170.45"
+  },
+  {
+    "name": "@tanstack/react-table",
+    "role": "表格",
+    "version": "8.21.3"
+  },
+  {
+    "name": "react-hook-form",
+    "role": "表单",
+    "version": "7.90.0"
+  },
+  {
+    "name": "zod",
+    "role": "数据校验",
+    "version": "4.6.7"
+  },
+  {
+    "name": "sonner",
+    "role": "消息反馈",
+    "version": "2.0.8"
+  },
+  {
+    "name": "recharts",
+    "role": "图表",
+    "version": "3.10.1"
+  },
+  {
+    "name": "cn",
+    "role": "类名合并",
+    "version": "0.5.0"
+  },
+  {
+    "name": "fflate",
+    "role": "模板归档",
+    "version": "0.8.3"
+  }
+]

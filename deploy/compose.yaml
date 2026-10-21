@@ -1,0 +1,21 @@
+name: forme
+
+services:
+  forme:
+    image: ${FORME_IMAGE:?Set FORME_IMAGE to a published GHCR digest}
+    container_name: forme
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:4183:8080"
+    read_only: true
+    tmpfs:
+      - /var/cache/nginx:uid=101,gid=101
+      - /var/run
+      - /tmp
+    security_opt:
+      - no-new-privileges:true
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
