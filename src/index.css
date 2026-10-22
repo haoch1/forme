@@ -3,7 +3,6 @@
 @import "shadcn/tailwind.css";
 @import "@fontsource-variable/geist";
 @import "./workbench.css";
-@import "./design-system/preset-controls.css";
 @source not "../references";
 @source not "../template";
 
@@ -88,37 +87,38 @@
 }
 
 .dark {
-  --background: #191919;
-  --foreground: #eeeeee;
-  --card: #222222;
-  --card-foreground: #eeeeee;
-  --popover: #222222;
-  --popover-foreground: #eeeeee;
-  --primary: #eeeeee;
-  --primary-foreground: #191919;
-  --secondary: #2a2a2a;
-  --secondary-foreground: #eeeeee;
-  --muted: #2a2a2a;
-  --muted-foreground: #b4b4b4;
-  --accent: #2a2a2a;
-  --accent-foreground: #eeeeee;
+  --background: oklch(0.145 0 0);
+  --foreground: oklch(0.985 0 0);
+  --card: oklch(0.205 0 0);
+  --card-foreground: oklch(0.985 0 0);
+  --popover: oklch(0.205 0 0);
+  --popover-foreground: oklch(0.985 0 0);
+  --primary: oklch(0.922 0 0);
+  --primary-foreground: oklch(0.205 0 0);
+  --secondary: oklch(0.269 0 0);
+  --secondary-foreground: oklch(0.985 0 0);
+  --muted: oklch(0.269 0 0);
+  --muted-foreground: oklch(0.708 0 0);
+  --accent: oklch(0.269 0 0);
+  --accent-foreground: oklch(0.985 0 0);
   --destructive: oklch(0.704 0.191 22.216);
-  --border: #3a3a3a;
-  --input: #484848;
-  --ring: #606060;
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.556 0 0);
   --chart-1: oklch(0.87 0 0);
   --chart-2: oklch(0.556 0 0);
   --chart-3: oklch(0.439 0 0);
   --chart-4: oklch(0.371 0 0);
   --chart-5: oklch(0.269 0 0);
-  --sidebar: #222222;
-  --sidebar-foreground: #eeeeee;
-  --sidebar-primary: #eeeeee;
-  --sidebar-primary-foreground: #191919;
-  --sidebar-accent: #313131;
-  --sidebar-accent-foreground: #eeeeee;
-  --sidebar-border: #3a3a3a;
-  --sidebar-ring: #606060;
+  --sidebar: oklch(0.205 0 0);
+  --sidebar-foreground: oklch(0.985 0 0);
+  --sidebar-primary: oklch(0.488 0.243 264.376);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.269 0 0);
+  --sidebar-accent-foreground: oklch(0.985 0 0);
+  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-ring: oklch(0.556 0 0);
+  --radius: 0.625rem;
 }
 
 @layer base {

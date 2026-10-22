@@ -1,4 +1,6 @@
-import { PresetButton as Button, PresetTableBody as TableBody, PresetTableCell as TableCell, PresetTableHead as TableHead, PresetTableHeader as TableHeader, PresetTableRow as TableRow, PresetDialogContent as DialogContent, PresetTabsList as TabsList, PresetTabsTrigger as TabsTrigger } from "@/components/preset-controls";
+import { ConfiguredButton as Button, ConfiguredDialogContent as DialogContent, ConfiguredTabsList as TabsList } from "@/components/configured-components";
+import { TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { TabsTrigger } from "@/components/ui/tabs";
 import { useState } from "react";
 import { ExternalLink, Download, ChevronDown } from "lucide-react";
 
@@ -33,7 +35,7 @@ export function SourcesDialog({ open, onOpenChange, returnFocus }: { open: boole
         ["shadcn/ui", "https://ui.shadcn.com/docs", "使用官方 Radix 组件源码，MIT。沿用统一的组件语言。"],
         ["shadcn Create", "https://ui.shadcn.com/create", "参数侧栏、预览工具与组件示例组织参考，保留原生组件与实际交互。"],
         ["Tailwind CSS", "https://tailwindcss.com/docs/colors", "新增十二套色系使用官方色阶，浅暗主题共用语义映射，MIT。"],
-        ["Radix Colors", "https://www.radix-ui.com/colors/docs/palette-composition/understanding-the-scale", "经典黑白的暗色使用官方 Gray 色阶，分别映射底色、控件、边框与文字，MIT。"],
+        ["Radix Colors", "https://www.radix-ui.com/colors/docs/palette-composition/understanding-the-scale", "早期暗色分层研究参考，保留来源与 MIT 许可；当前经典黑白采用 shadcn Neutral。"],
         ["tweakcn", "https://github.com/jnsahaj/tweakcn", "主题预设与编辑器组织参考，Apache-2.0。预设、来源提交与许可证随模板保留。"],
         ["shadcn-admin", "https://github.com/satnaing/shadcn-admin", "应用导航、表格和表单结构参考，MIT。"],
         ["Lucide", "https://lucide.dev", "全部通用图标使用 Lucide，保留 ISC 许可证。"],

@@ -1,5 +1,4 @@
 import { readFileSync, writeFileSync } from "node:fs";
-import { defaultInterface } from "../src/design-system/interface-options.ts";
 const pkg = JSON.parse(readFileSync("package.json", "utf8"));
 for (const section of ["dependencies", "devDependencies"])
   for (const name of Object.keys(pkg[section]))
@@ -52,27 +51,4 @@ writeFileSync(
     2,
   ) + "\n",
 );
-const defaults = JSON.parse(
-  readFileSync("src/design-system/default-tokens.json", "utf8"),
-);
-defaults.dark.radius = defaults.light.radius;
-writeFileSync(
-  "src/design-system/default-config.json",
-  JSON.stringify(
-    {
-      preset: "neutral",
-      mode: "light",
-      styles: defaults,
-      density: "compact",
-      font: "geist",
-      motion: true,
-      textSize: "standard",
-      navigation: "sidebar",
-      startPage: "projects",
-      advanced: defaultInterface,
-    },
-    null,
-    2,
-  ) + "\n",
-);
-console.log("Pinned every direct dependency and generated stack snapshot.");
+console.log("Pinned every direct dependency and generated stack snapshot; design defaults preserved.");

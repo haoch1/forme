@@ -1,4 +1,5 @@
-import { PresetButton as Button, PresetTooltipContent as TooltipContent, PresetSelectContent as SelectContent, PresetSelectTrigger as SelectTrigger } from "@/components/preset-controls";
+import { ConfiguredButton as Button, ConfiguredTooltipContent as TooltipContent, ConfiguredSelectContent as SelectContent } from "@/components/configured-components";
+import { SelectTrigger } from "@/components/ui/select";
 import type { ComponentProps, ReactNode, Ref } from "react";
 import type { LucideIcon } from "lucide-react";
 

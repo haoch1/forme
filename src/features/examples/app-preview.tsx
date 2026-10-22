@@ -1,4 +1,5 @@
-import { PresetButton as Button } from "@/components/preset-controls";
+import type { CSSProperties } from "react";
+import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem, SidebarProvider } from "@/components/ui/sidebar";
 import { Folder, LayoutDashboard, User, Settings, PanelsTopLeft } from "lucide-react";
 
 import { cn } from "@/lib/utils";
@@ -27,18 +28,18 @@ export function ApplicationPreview({ name = "应用示例", navigation, view, on
 }) {
   const selected = views.find((v) => v.id === view) ?? views[0];
   return (
-    <div className={cn("example-shell", navigation === "top" && "top-navigation", embedded && "embedded-app")}>
-      <aside className="example-sidebar">
-        <div className="preview-app-name"><PanelsTopLeft className="size-4 shrink-0" /><span className="truncate">{name || "我的项目"}</span></div>
-        <nav className="flex flex-col gap-1" aria-label="示例应用导航">
+    <SidebarProvider className={cn("example-shell min-h-0", navigation === "top" && "top-navigation", embedded && "embedded-app")} style={{ "--sidebar-width": "var(--ui-sidebar-width,216px)" } as CSSProperties}>
+      <Sidebar collapsible="none" className="example-sidebar">
+        <SidebarHeader className="preview-app-name"><PanelsTopLeft className="size-4 shrink-0" /><span className="truncate">{name || "我的项目"}</span></SidebarHeader>
+        <SidebarContent><nav aria-label="示例应用导航"><SidebarMenu>
           {views.filter((v) => !embedded || v.id !== "settings").map(({ id, label, icon: Icon }) => (
-            <Button variant={selected.id === id ? "secondary" : "ghost"} key={id} className="justify-start" aria-current={selected.id === id ? "page" : undefined} onClick={() => onViewChange(id)}>
+            <SidebarMenuItem key={id}><SidebarMenuButton isActive={selected.id === id} aria-current={selected.id === id ? "page" : undefined} onClick={() => onViewChange(id)}>
               <Icon data-icon="inline-start" />{label}
-            </Button>
+            </SidebarMenuButton></SidebarMenuItem>
           ))}
-        </nav>
-        <p className="mt-auto pt-8 text-xs leading-6 text-muted-foreground">演示内容保存在本机</p>
-      </aside>
+        </SidebarMenu></nav></SidebarContent>
+        <SidebarFooter><p className="text-xs leading-6 text-muted-foreground">演示内容保存在本机</p></SidebarFooter>
+      </Sidebar>
       <div className="example-main">
         <div className="example-content">
         <div className="mb-6 flex flex-col gap-1.5">
@@ -50,6 +51,6 @@ export function ApplicationPreview({ name = "应用示例", navigation, view, on
               : <div className="max-w-xl">{selected.id === "profile" ? <ProfileForm /> : <Preferences />}</div>}
         </div>
       </div>
-    </div>
+    </SidebarProvider>
   );
 }

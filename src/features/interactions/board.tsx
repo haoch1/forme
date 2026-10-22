@@ -1,4 +1,6 @@
-import { PresetButton as Button, PresetInput as Input, PresetDialogContent as DialogContent, PresetFieldLabel as FieldLabel } from "@/components/preset-controls";
+import { ConfiguredButton as Button, ConfiguredDialogContent as DialogContent } from "@/components/configured-components";
+import { Input } from "@/components/ui/input";
+import { FieldLabel } from "@/components/ui/field";
 import { useCallback, useRef, useState } from "react";
 import { defaultInterface, type InterfaceOptions } from "@/design-system/interface-options";
 import { DragDropProvider, useDroppable, PointerSensor, KeyboardSensor } from "@dnd-kit/react";
@@ -14,6 +16,7 @@ import {
 } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
+import { Card, CardHeader, CardTitle, CardAction, CardContent } from "@/components/ui/card";
 
 import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Dialog, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog";
@@ -61,9 +64,10 @@ function Task({
     if (options.dragMode === "card") handleRef(node);
   }, [ref, handleRef, options.dragMode]);
   return (
-    <div
+    <Card
       ref={rootRef}
-      className="board-task"
+      size="sm"
+      className="board-task flex-row items-center gap-2 px-3"
       data-card-drag={options.dragMode === "card"}
       tabIndex={options.dragMode === "card" ? 0 : undefined}
       role={options.dragMode === "card" ? "group" : undefined}
@@ -107,7 +111,7 @@ function Task({
           </DropdownMenuGroup>
         </DropdownMenuContent>
       </DropdownMenu>
-    </div>
+    </Card>
   );
 }
 function Column({
@@ -129,16 +133,16 @@ function Column({
     collisionPriority: CollisionPriority.Low,
   });
   return (
-    <section
+    <Card
       ref={ref}
+      size="sm"
+      role="region"
+      aria-labelledby={`board-column-${id}`}
       className="board-column"
       data-drop-target={isDropTarget || undefined}
     >
-      <div className="flex items-center gap-2 pb-3">
-        <span className="text-sm font-medium">{names[id]}</span>
-        <Badge variant="secondary">{tasks.length}</Badge>
-      </div>
-      <div className="flex min-h-36 flex-col gap-2">
+      <CardHeader><CardTitle id={`board-column-${id}`}>{names[id]}</CardTitle><CardAction><Badge variant="secondary">{tasks.length}</Badge></CardAction></CardHeader>
+      <CardContent className="min-h-36 gap-2">
         {tasks.map((task, index) => (
           <Task
             key={task}
@@ -155,8 +159,8 @@ function Column({
             拖到这里，或使用任务菜单移动。
           </p>
         )}
-      </div>
-    </section>
+      </CardContent>
+    </Card>
   );
 }
 export function BoardDemo({ options = defaultInterface }: { options?: InterfaceOptions }) {

@@ -1,7 +1,7 @@
 import { useEffect, useLayoutEffect, useState } from "react";
 import { LucideProvider } from "lucide-react";
 import { MotionConfig } from "motion/react";
-import { Toaster } from "sonner";
+import { Toaster } from "@/components/ui/sonner";
 import { useThemeStore, useThemeSync } from "@/stores/theme-store";
 import { applyThemeToDocument } from "@/design-system/theme";
 import { iconPixels, iconStrokes, tooltipDelays, toastDurations } from "@/design-system/interface-options";
@@ -10,7 +10,6 @@ import { DetailOptionPreview } from "@/features/examples/detail-option-preview";
 import { detailOptionIds } from "@/design-system/option-catalog";
 import { InterfaceOptionsProvider } from "@/design-system/interface-context";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import { useInputMethod } from "@/lib/use-input-method";
 import { motion } from "motion/react";
 import { PreviewBoundary } from "./preview-boundary";
 import { ApplicationPreview } from "@/features/examples/app-preview";
@@ -29,7 +28,6 @@ export default function ResponsivePreview() {
     return isPreviewId(initial) ? initial : "cards";
   });
   useThemeSync();
-  useInputMethod();
   useLayoutEffect(() => {
     document.documentElement.dataset.embeddedPreview = "true";
     applyThemeToDocument(theme);
@@ -83,7 +81,7 @@ export default function ResponsivePreview() {
   const a = theme.advanced;
   return <LucideProvider size={iconPixels[a.iconSize]} strokeWidth={iconStrokes[a.iconStroke]}>
     <MotionConfig reducedMotion={theme.motion ? "user" : "always"}>
-      <InterfaceOptionsProvider options={a} motionEnabled={theme.motion}><TooltipProvider delayDuration={tooltipDelays[a.tooltipDelay]}><PreviewBoundary><div className="frame-preview">
+      <InterfaceOptionsProvider options={a}><TooltipProvider delayDuration={tooltipDelays[a.tooltipDelay]}><PreviewBoundary><div className="frame-preview">
         {demo === "app" ? <ApplicationPreview navigation={theme.navigation} view={view} onViewChange={(id) => setView(id as typeof view)} options={a} />
           : <motion.div key={demo} className="frame-demo" initial={a.viewTransition === "fade" ? { opacity: 0 } : false} animate={{ opacity: 1 }} transition={{ duration: 0.12 }}>
             {demo === "cards" ? <Cards /> : demo === "details" ? <div className="flex flex-col gap-6">{example && <DetailOptionPreview key={`${example.id}-${example.revision}`} id={example.id} />}<InterfaceDetailsDemo /></div> : demo === "icons" ? <IconsDemo /> : demo === "motion" ? <MotionDemo key={`${theme.motion}-${a.motionStyle}-${a.motionSpeed}-${a.motionEase}`} enabled={theme.motion} options={a} />

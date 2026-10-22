@@ -1,4 +1,9 @@
-import { PresetButton as Button, PresetInput as Input, PresetTextarea as Textarea, PresetTabsList as TabsList, PresetTabsTrigger as TabsTrigger, PresetFieldLabel as FieldLabel, PresetCard as Card, PresetSwitch as Switch } from "@/components/preset-controls";
+import { ConfiguredButton as Button } from "@/components/configured-components";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { FieldLabel } from "@/components/ui/field";
+import { Card } from "@/components/ui/card";
+import { Switch } from "@/components/ui/switch";
 import { useState } from "react";
 import { useStore } from "zustand";
 import { createStore } from "zustand/vanilla";
@@ -9,14 +14,12 @@ import { Search, Plus, Settings, Home, Folder, Users, Bell, ArrowRight, Check, X
 
 import { ActionButton } from "@/components/action-button";
 
-import { Tabs, TabsContent } from "@/components/ui/tabs";
 import { Field, FieldContent, FieldDescription } from "@/components/ui/field";
-import { CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
+import { CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card";
 
 import { ResizablePanelGroup, ResizablePanel, ResizableHandle } from "@/components/ui/resizable";
 import { InterfaceEmpty } from "@/components/interface-empty";
 import { copyText } from "@/lib/files";
-import { InterfaceDetailsDemo } from "./details-demo";
 import { defaultInterface, motionPreset, type InterfaceOptions } from "@/design-system/interface-options";
 const icons: { name: string; label: string; icon: LucideIcon }[] = [
   { name: "Search", label: "搜索", icon: Search }, { name: "Plus", label: "添加", icon: Plus },
@@ -31,7 +34,7 @@ const icons: { name: string; label: string; icon: LucideIcon }[] = [
 export function IconsDemo() {
   const [query, setQuery] = useState("");
   const filtered = icons.filter((i) => `${i.name} ${i.label}`.toLowerCase().includes(query.toLowerCase()));
-  return <div className="flex flex-col gap-5"><Field className="max-w-sm"><FieldLabel htmlFor="icon-query">找个图标</FieldLabel><Input id="icon-query" value={query} onChange={(e) => setQuery(e.target.value)} placeholder="搜索名称，如设置、收藏" /></Field><div className="practical-icon-grid">{filtered.map(({ name, label, icon: Icon }) => <Button key={name} variant="outline" className="practical-icon-item" onClick={() => void copyText(`请使用 lucide-react 的 ${name} 图标表达“${label}”，沿用项目内统一的图标尺寸和线宽，不再安装其他图标库。`)}><Icon data-icon="inline-start" /><span>{label}</span><span className="text-xs text-muted-foreground">{name}</span></Button>)}</div>{filtered.length === 0 && <InterfaceEmpty title="暂时没找到" description="试试搜索、设置这样的中文，或输入英文名称" />}</div>;
+  return <div className="flex flex-col gap-5"><Field className="max-w-sm"><FieldLabel htmlFor="icon-query">找个图标</FieldLabel><Input id="icon-query" value={query} onChange={(e) => setQuery(e.target.value)} placeholder="搜索名称，如设置、收藏" /></Field><div className="practical-icon-grid">{filtered.map(({ name, label, icon: Icon }) => <Card key={name} size="sm" className="practical-icon-item"><CardContent className="items-center text-center"><div className="flex h-5 items-center justify-center"><Icon aria-hidden="true" /></div><span>{label}</span><code className="text-xs text-muted-foreground">{name}</code></CardContent><CardFooter><Button className="w-full" variant="outline" size="sm" aria-label={`复制${label}图标引用`} onClick={() => void copyText(`请使用 lucide-react 的 ${name} 图标表达“${label}”，沿用项目内统一的图标尺寸和线宽，不再安装其他图标库。`)}><Copy data-icon="inline-start" />复制</Button></CardFooter></Card>)}</div>{filtered.length === 0 && <InterfaceEmpty title="暂时没找到" description="试试搜索、设置这样的中文，或输入英文名称" />}</div>;
 }
 
 export function MotionDemo({ enabled, onToggle, options = defaultInterface }: { enabled: boolean; onToggle?: () => void; options?: InterfaceOptions }) {
@@ -58,8 +61,4 @@ export function PreferenceDemo({ options = defaultInterface }: { options?: Inter
   const tips = useStore(store, (s) => s.tips);
   const setTips = useStore(store, (s) => s.setTips);
   return <Card><CardHeader><CardTitle>偏好设置会被记住</CardTitle><CardDescription>切换设置，再刷新预览验证保存结果。由 Zustand 管理。</CardDescription></CardHeader><CardContent className="flex flex-col gap-5"><Field orientation="horizontal"><FieldContent><FieldLabel htmlFor="demo-tips">显示操作提示</FieldLabel><FieldDescription>多个组件读取同一份状态</FieldDescription></FieldContent><Switch id="demo-tips" checked={tips} onCheckedChange={setTips} /></Field><p className="text-sm">当前状态：{tips ? "显示提示" : "隐藏提示"}</p><p className="text-xs leading-6 text-muted-foreground">{options.preferenceStorage === "session" ? "当前会话：刷新仍保留，关闭这个浏览器标签页后结束。" : "长期记住：下次打开仍可读取这台设备的设置。"}</p></CardContent></Card>;
-}
-
-export function PracticalDemos({ motionEnabled = true, options = defaultInterface }: { motionEnabled?: boolean; options?: InterfaceOptions }) {
-  return <Tabs defaultValue="icons" className="practical-demos"><TabsList><TabsTrigger value="icons">选图标</TabsTrigger><TabsTrigger value="motion">轻微动效</TabsTrigger><TabsTrigger value="panels">拖动分栏</TabsTrigger><TabsTrigger value="state">状态保存</TabsTrigger><TabsTrigger value="details">界面细节</TabsTrigger></TabsList><TabsContent value="icons" className="pt-6"><IconsDemo /></TabsContent><TabsContent value="motion" className="pt-6"><MotionDemo enabled={motionEnabled} options={options} /></TabsContent><TabsContent value="panels" className="pt-6"><PanelsDemo options={options} /></TabsContent><TabsContent value="state" className="pt-6"><PreferenceDemo options={options} /></TabsContent><TabsContent value="details" className="pt-6"><InterfaceDetailsDemo /></TabsContent></Tabs>;
 }

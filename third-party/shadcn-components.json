@@ -2,7 +2,7 @@
   "generator": "shadcn 4.22.1",
   "style": "radix-vega",
   "base": "radix",
-  "retrievedAt": "2026-10-21",
+  "retrievedAt": "2026-10-22",
   "license": "MIT",
   "normalization": "LF, trim outer whitespace, single trailing newline",
   "components": {
@@ -61,10 +61,9 @@
     "dialog.tsx": {
       "registry": "https://ui.shadcn.com/r/styles/radix-vega/dialog.json",
       "upstreamSha256": "fb09be501fccd37b7960d03aefaa61a96c6e0074056151b8559f6068e5c4493b",
-      "localSha256": "660a8986c31ad6d35d99ba3ce94f7436d116de009dcb2ff5f7636854097633d1",
+      "localSha256": "f6652d331f13575e614b837e31ab7a64ec8aeedec42be69fd343be858b82110a",
       "patches": [
-        "localized-close-labels",
-        "semantic-overlay-opacity"
+        "chinese-accessible-labels"
       ]
     },
     "dropdown-menu.tsx": {
@@ -101,12 +100,6 @@
       "registry": "https://ui.shadcn.com/r/styles/radix-vega/resizable.json",
       "upstreamSha256": "565714189484affdabde40be5028fa7232c91a045ad7e955423703fd8ed8c73b",
       "localSha256": "565714189484affdabde40be5028fa7232c91a045ad7e955423703fd8ed8c73b",
-      "patches": []
-    },
-    "scroll-area.tsx": {
-      "registry": "https://ui.shadcn.com/r/styles/radix-vega/scroll-area.json",
-      "upstreamSha256": "9c6cff5fff536a8d042f956df6fb6f128970bcbac2115482989288292464e4ca",
-      "localSha256": "9c6cff5fff536a8d042f956df6fb6f128970bcbac2115482989288292464e4ca",
       "patches": []
     },
     "select.tsx": {
@@ -190,6 +183,55 @@
       "registry": "https://ui.shadcn.com/r/styles/radix-vega/tooltip.json",
       "upstreamSha256": "fc4380a53b7c847ff3d692c320f8d889eaaf3d6878dcba1da926ec4ab3a7c037",
       "localSha256": "fc4380a53b7c847ff3d692c320f8d889eaaf3d6878dcba1da926ec4ab3a7c037",
+      "patches": []
+    },
+    "pagination.tsx": {
+      "registry": "https://ui.shadcn.com/r/styles/radix-vega/pagination.json",
+      "upstreamSha256": "31e20c01229dee8d39bcc8d091b5b699ba346f96bb372c06dd7c0bb3151e957e",
+      "localSha256": "97acf3318fad8908be3f6790145b269f88b0ca5ffade46bf90c54779309b2e7b",
+      "patches": [
+        "chinese-accessible-labels"
+      ]
+    },
+    "sonner.tsx": {
+      "registry": "https://ui.shadcn.com/r/styles/radix-vega/sonner.json",
+      "upstreamSha256": "0c729f9f1ada0b0bedd9296710cc257dc43559fa6b8cc40f010d129e8ff85fdd",
+      "localSha256": "86d24a4f07a5aebed752da95c2f1432e6d0fe3fff89ac80802d4ccab1be8318b",
+      "patches": [
+        "theme-prop-instead-of-next-themes"
+      ]
+    },
+    "sidebar.tsx": {
+      "registry": "https://ui.shadcn.com/r/styles/radix-vega/sidebar.json",
+      "upstreamSha256": "36214bb5970feced810ba71ea64f1f60177b5d4ab3af3c82979a3290e43a9aa1",
+      "localSha256": "072ff8e4cad493ab67b795c8768b7131c5f50e5d74b29c7d2b40867bc0c3e22c",
+      "patches": [
+        "explicit-visual-transitions",
+        "chinese-accessible-labels"
+      ]
+    },
+    "sheet.tsx": {
+      "registry": "https://ui.shadcn.com/r/styles/radix-vega/sheet.json",
+      "upstreamSha256": "e28e831fa1edf875a44461c2e655564fbe8d56ecca3660350cb3bc3dfbd08249",
+      "localSha256": "93f3f86c6a0f2fab4dda404e90edb8a3c8fe638ad3ba56d0ab4da926c9c333c0",
+      "patches": [
+        "chinese-accessible-labels"
+      ]
+    },
+    "accordion.tsx": {
+      "registry": "https://ui.shadcn.com/r/styles/radix-vega/accordion.json",
+      "upstreamSha256": "145417ca009dea8ce03c49f2710dbc72105f6853fa0b911be0562861087021ea",
+      "localSha256": "34e2affd8a73bc48d956d1bd0d26b119e8aff2de19a288ffee815b1a16fe6402",
+      "patches": [
+        "explicit-visual-transitions"
+      ]
+    }
+  },
+  "hooks": {
+    "use-mobile.ts": {
+      "registry": "https://ui.shadcn.com/r/styles/radix-vega/use-mobile.json",
+      "upstreamSha256": "ad0936f84f1df79d3697bfbff9c18f8ad58431c1cbaf2359c6a853b0fcc9f28b",
+      "localSha256": "ad0936f84f1df79d3697bfbff9c18f8ad58431c1cbaf2359c6a853b0fcc9f28b",
       "patches": []
     }
   }

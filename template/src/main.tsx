@@ -1,5 +1,5 @@
-import { PresetButton as Button } from "@/components/preset-controls";
-import { StrictMode, useEffect, lazy, Suspense } from "react";
+import { ConfiguredButton as Button } from "@/components/configured-components";
+import { StrictMode, useLayoutEffect, lazy, Suspense } from "react";
 import { createRoot } from "react-dom/client";
 import {
   createRootRoute,
@@ -9,12 +9,13 @@ import {
   Link,
   Outlet,
   createHashHistory,
+  useRouterState,
 } from "@tanstack/react-router";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { MotionConfig } from "motion/react";
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
-import { Toaster } from "sonner";
+import { Toaster } from "@/components/ui/sonner";
 import {
   Folder,
   User,
@@ -32,8 +33,8 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { applyThemeToDocument, normalizeTheme, type ThemeConfig } from "@/design-system/theme";
 import { iconPixels, iconStrokes, tooltipDelays, toastDurations } from "@/design-system/interface-options";
 import { InterfaceOptionsProvider } from "@/design-system/interface-context";
-import { useInputMethod } from "@/lib/use-input-method";
 import { cn } from "@/lib/utils";
+import { Sidebar, SidebarContent, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem, SidebarProvider } from "@/components/ui/sidebar";
 import selectedTheme from "./selected-theme.json";
 import "./index.css";
 import "./selected-theme.css";
@@ -61,12 +62,10 @@ const BoardDemo = lazy(() =>
     default: m.BoardDemo,
   })),
 );
-const WorkspaceDemo = lazy(() =>
-  import("@/features/layouts/workspace").then((m) => ({
-    default: m.WorkspaceDemo,
-  })),
-);
-const PracticalDemos = lazy(() => import("@/features/examples/toolkit-demos").then((m) => ({ default: m.PracticalDemos })));
+const PanelsDemo = lazy(() => import("@/features/examples/toolkit-demos").then((m) => ({ default: m.PanelsDemo })));
+const IconsDemo = lazy(() => import("@/features/examples/toolkit-demos").then((m) => ({ default: m.IconsDemo })));
+const MotionDemo = lazy(() => import("@/features/examples/toolkit-demos").then((m) => ({ default: m.MotionDemo })));
+const PreferenceDemo = lazy(() => import("@/features/examples/toolkit-demos").then((m) => ({ default: m.PreferenceDemo })));
 const usePreferences = create<{ dark: boolean; toggle: () => void }>()(
   persist(
     (set) => ({
@@ -85,15 +84,15 @@ const nav = [
   { to: "/settings", label: "设置", icon: Settings },
 ] as const;
 function Shell() {
-  useInputMethod();
   const dark = usePreferences((s) => s.dark);
   const toggle = usePreferences((s) => s.toggle);
-  useEffect(() => {
+  const pathname = useRouterState({ select: (state) => state.location.pathname });
+  useLayoutEffect(() => {
     document.title = "应用示例";
     applyThemeToDocument(theme, dark ? "dark" : "light");
   }, [dark]);
   return (
-    <LucideProvider size={iconPixels[theme.advanced.iconSize]} strokeWidth={iconStrokes[theme.advanced.iconStroke]}><MotionConfig reducedMotion={theme.motion ? "user" : "always"}><InterfaceOptionsProvider options={theme.advanced} motionEnabled={theme.motion}>
+    <LucideProvider size={iconPixels[theme.advanced.iconSize]} strokeWidth={iconStrokes[theme.advanced.iconStroke]}><MotionConfig reducedMotion={theme.motion ? "user" : "always"}><InterfaceOptionsProvider options={theme.advanced}>
       <div className="app-shell">
         <header className="app-header">
           <span className="app-brand">应用示例</span>
@@ -108,28 +107,17 @@ function Shell() {
           </Button>
         </header>
         <main className="app-main">
-          <div className={cn("example-shell", theme.navigation === "top" && "top-navigation")}>
-            <aside className="example-sidebar">
-              <nav className="flex flex-col gap-1" aria-label="应用导航">
+          <SidebarProvider className={cn("example-shell min-h-0", theme.navigation === "top" && "top-navigation")}>
+            <Sidebar collapsible="none" className="example-sidebar">
+              <SidebarHeader className="preview-app-name">应用示例</SidebarHeader>
+              <SidebarContent><nav aria-label="应用导航"><SidebarMenu>
                 {nav.map(({ to, label, icon: Icon }) => (
-                  <Button
-                    key={to}
-                    variant="ghost"
-                    className="justify-start"
-                    asChild
-                  >
-                    <Link
-                      to={to}
-                      activeProps={{ className: "bg-secondary" }}
-                      activeOptions={{ exact: true }}
-                    >
-                      <Icon data-icon="inline-start" />
-                      {label}
-                    </Link>
-                  </Button>
+                  <SidebarMenuItem key={to}><SidebarMenuButton asChild isActive={pathname === to}>
+                    <Link to={to}><Icon />{label}</Link>
+                  </SidebarMenuButton></SidebarMenuItem>
                 ))}
-              </nav>
-            </aside>
+              </SidebarMenu></nav></SidebarContent>
+            </Sidebar>
             <div className="example-main">
               <div className="example-content">
               <Suspense fallback={<Skeleton className="h-64 w-full" />}>
@@ -137,12 +125,8 @@ function Shell() {
               </Suspense>
               </div>
             </div>
-          </div>
+          </SidebarProvider>
         </main>
-        <footer className="app-footer">
-          <span>shadcn/ui · Lucide</span>
-          <span>本地示例数据</span>
-        </footer>
         <Toaster theme={dark ? "dark" : "light"} position={theme.advanced.toastPosition} duration={toastDurations[theme.advanced.toastDuration]} closeButton={theme.advanced.toastCloseButton} />
       </div>
     </InterfaceOptionsProvider></MotionConfig></LucideProvider>
@@ -150,7 +134,7 @@ function Shell() {
 }
 const root = createRootRoute({ component: Shell });
 const routes = [
-  createRoute({ getParentRoute: () => root, path: "/toolkit", component: () => <><h1 className="mb-6 text-2xl font-semibold">常用能力</h1><PracticalDemos motionEnabled={theme.motion} options={theme.advanced} /></> }),
+  createRoute({ getParentRoute: () => root, path: "/toolkit", component: () => <div className="flex flex-col gap-6"><h1 className="text-2xl font-semibold">组件与交互</h1><IconsDemo /><MotionDemo enabled={theme.motion} options={theme.advanced} /><PreferenceDemo options={theme.advanced} /></div> }),
   createRoute({
     getParentRoute: () => root,
     path: "/",
@@ -169,7 +153,7 @@ const routes = [
   createRoute({
     getParentRoute: () => root,
     path: "/workspace",
-    component: WorkspaceDemo,
+    component: () => <PanelsDemo options={theme.advanced} />,
   }),
   createRoute({
     getParentRoute: () => root,

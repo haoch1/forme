@@ -16,10 +16,10 @@ export async function templateFiles(theme) {
   };
   for (const dir of [
     "src/components",
+    "src/hooks",
     "src/lib",
     "src/design-system",
     "src/features/examples",
-    "src/features/layouts",
     "src/features/interactions",
     "third-party",
     "docs",

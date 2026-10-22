@@ -1,4 +1,6 @@
-import { PresetButton as Button, PresetInput as Input, PresetFieldGroup as FieldGroup, PresetFieldLabel as FieldLabel } from "@/components/preset-controls";
+import { ConfiguredButton as Button } from "@/components/configured-components";
+import { Input } from "@/components/ui/input";
+import { FieldGroup, FieldLabel } from "@/components/ui/field";
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";

@@ -1,4 +1,3 @@
-import defaults from "./default-tokens.json";
 import baseline from "./default-config.json";
 import importedPresets from "./presets.json";
 import accentPresets from "./accent-presets.json";
@@ -13,7 +12,7 @@ export type ThemeConfig = {
   preset: string;
   mode: Mode;
   styles: Record<Mode, Tokens>;
-  density: "compact" | "comfortable" | "spacious";
+  density: "standard" | "compact" | "spacious";
   font: "geist" | "system" | "mono";
   motion: boolean;
   textSize: "compact" | "standard" | "large";
@@ -27,8 +26,8 @@ export const fonts = {
   mono: 'ui-monospace, "Microsoft YaHei", monospace',
 };
 const baseStyles = {
-  light: defaults.light,
-  dark: { ...defaults.dark, radius: defaults.light.radius },
+  light: baseline.styles.light,
+  dark: baseline.styles.dark,
 };
 export const initialTheme: ThemeConfig = {
   ...baseline as ThemeConfig,
@@ -45,20 +44,27 @@ export const presets: Record<
   ...officialPalettes,
 };
 export function normalizeTheme(theme: ThemeConfig): ThemeConfig {
+  const legacy = theme.advanced as unknown as Record<string, unknown> | undefined;
+  const advanced = { ...legacy };
+  advanced.tabsStyle = legacy?.tabsStyle === "line" ? "line" : "default";
+  advanced.toggleVariant = legacy?.toggleVariant ?? (legacy?.selectionStyle === "outline" ? "outline" : "default");
+  advanced.buttonStyle = legacy?.buttonStyle === "solid" ? "default" : legacy?.buttonStyle ?? "default";
+  advanced.controlSize = legacy?.controlSize ?? ({ compact: "sm", standard: "default", comfortable: "lg" } as Record<string,string>)[String(legacy?.controlHeight)] ?? "default";
   const next = { ...initialTheme, ...theme };
   delete next.name;
+  if ((next.density as string) === "comfortable") next.density = "standard";
   return {
     ...next,
     preset: presets[next.preset] ? next.preset : "neutral",
-    advanced: { ...defaultInterface, ...theme.advanced },
+    advanced: Object.fromEntries(Object.entries(defaultInterface).map(([key, fallback]) => [key, advanced[key] ?? fallback])) as InterfaceOptions,
     styles: {
-      light: { ...baseStyles.light, ...theme.styles.light },
+      light: { ...baseStyles.light, ...theme.styles?.light },
       dark: {
         ...baseStyles.dark,
-        ...theme.styles.dark,
+        ...theme.styles?.dark,
         radius:
-          theme.styles.dark.radius ??
-          theme.styles.light.radius ??
+          theme.styles?.dark?.radius ??
+          theme.styles?.light?.radius ??
           baseStyles.light.radius,
       },
     },
@@ -67,12 +73,6 @@ export function normalizeTheme(theme: ThemeConfig): ThemeConfig {
 export function resolvedTokens(theme: ThemeConfig, mode: Mode): Tokens {
   const tokens = { ...theme.styles[mode] };
   if (/^[\d.]+rem$/.test(tokens.radius)) tokens.radius = `${parseFloat(tokens.radius) * 16}px`;
-  if (theme.advanced.border !== "default") {
-    const percentage = theme.advanced.border === "soft" ? 10 : 28;
-    tokens.border = `color-mix(in oklab, ${tokens.foreground} ${percentage}%, ${tokens.background})`;
-    tokens.input = tokens.border;
-    tokens["sidebar-border"] = tokens.border;
-  }
   return tokens;
 }
 

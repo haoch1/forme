@@ -1,4 +1,7 @@
-import { PresetButton as Button, PresetCard as Card, PresetSwitch as Switch, PresetSeparator as Separator } from "@/components/preset-controls";
+import { ConfiguredButton as Button } from "@/components/configured-components";
+import { Card } from "@/components/ui/card";
+import { Switch } from "@/components/ui/switch";
+import { Separator } from "@/components/ui/separator";
 // Adapted from tweakcn CardsCookieSettings, CardsReportIssue and CardsTeamMembers.
 import { memo, useState } from "react";
 import { toast } from "sonner";
@@ -9,7 +12,7 @@ import { CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from 
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 
 import { Field, FieldContent, FieldDescription } from "@/components/ui/field";
-import { PresetFieldGroup as FieldGroup, PresetFieldLabel as FieldLabel } from "@/components/preset-controls";
+import { FieldGroup, FieldLabel } from "@/components/ui/field";
 import { Badge } from "@/components/ui/badge";
 
 import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";

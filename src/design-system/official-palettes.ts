@@ -1,6 +1,7 @@
 // Official Tailwind CSS 4.3.3 scales. Semantic pairs follow shadcn/ui conventions.
 // Source and MIT license: third-party/sources.json and tailwind-LICENSE.
-import defaults from './default-tokens.json';
+import baseline from './default-config.json';
+const defaults = baseline.styles;
 import type { Mode, Tokens } from './theme';
 const scales: Record<string, Record<string,string>> = {
   "zinc": {

@@ -5,7 +5,7 @@ RUN npm install --global pnpm@11.25.0
 COPY package.json pnpm-lock.yaml .npmrc ./
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile --store-dir=/pnpm/store
 COPY . .
-RUN pnpm typecheck && pnpm lint && pnpm check:stack && pnpm check:ui && pnpm package:template && pnpm build
+RUN pnpm typecheck && pnpm lint && pnpm check:stack && pnpm check:ui && pnpm check:defaults && pnpm check:template && pnpm package:template && pnpm build
 
 FROM nginx:1.30.6-alpine AS runtime
 COPY deploy/container-nginx.conf /etc/nginx/conf.d/default.conf

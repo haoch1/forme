@@ -20,25 +20,6 @@ writeFileSync(
   new URL("src/design-system/presets.json", root),
   JSON.stringify(selected, null, 2) + "\n",
 );
-const css = readFileSync(new URL("src/index.css", root), "utf8");
-const parse = (selector) =>
-  Object.fromEntries(
-    [...css.match(selector)[1].matchAll(/--([\w-]+):\s*([^;]+);/g)].map((m) => [
-      m[1],
-      m[2].trim(),
-    ]),
-  );
-writeFileSync(
-  new URL("src/design-system/default-tokens.json", root),
-  JSON.stringify(
-    {
-      light: parse(/:root\s*\{([^}]+)\}/),
-      dark: parse(/\.dark\s*\{([^}]+)\}/),
-    },
-    null,
-    2,
-  ) + "\n",
-);
 mkdirSync(new URL("third-party/", root), { recursive: true });
 copyFileSync(
   new URL("LICENSE", upstream),

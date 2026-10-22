@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { useEffect } from "react";
+import { migrateDefaultAppearance } from "@/design-system/migrate-defaults";
 import {
   initialTheme,
   normalizeTheme,
@@ -59,11 +60,10 @@ export const useThemeStore = create<ThemeStore>()(
     }),
     {
       name: "style-theme-v1",
-      version: 6,
+      version: 8,
       migrate: (persisted, previousVersion) => {
         const saved = persisted as Partial<ThemeStore>;
         const theme = normalizeTheme(saved.theme ?? structuredClone(initialTheme));
-        if (previousVersion < 2 && theme.advanced.shadow === "none") theme.advanced.shadow = "subtle";
         if (previousVersion < 4) {
           for (const mode of ["light", "dark"] as const) {
             if (["0.25rem", "0.5rem"].includes(theme.styles[mode].radius)) theme.styles[mode].radius = "0.625rem";
@@ -72,8 +72,7 @@ export const useThemeStore = create<ThemeStore>()(
         if (previousVersion < 5 && theme.preset === "neutral" && theme.styles.dark.background === "oklch(0.145 0 0)") {
           theme.styles.dark = { ...initialTheme.styles.dark, radius: theme.styles.dark.radius };
         }
-        if (previousVersion < 6 && theme.advanced.selectionStyle === "soft") theme.advanced.selectionStyle = "segmented";
-        return { theme, savedAt: saved.savedAt ?? null };
+        return { theme: previousVersion < 8 ? migrateDefaultAppearance(theme) : theme, savedAt: saved.savedAt ?? null };
       },
       partialize: ({ theme, savedAt }) => ({ theme, savedAt }),
       merge: (persisted, current) => {

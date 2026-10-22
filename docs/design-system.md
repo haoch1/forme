@@ -1,40 +1,29 @@
 # 设计系统
 
-视觉基线是官方 shadcn/ui radix-vega，组件源码归项目持有。保留 shadcn/ui 的原生语言；图标统一为 Lucide，动画统一为 Motion。基础组件通过官方 CLI 生成并逐个核对；项目预设放在单独组合层，明确区分原生 API 与主题扩展。来源与必要补丁见 component-policy.md。
+统一基线为官方 shadcn/ui Vega / Neutral / Geist。Vega 在官方 Create 文档中被描述为经典 shadcn 外观；没有公开的风格使用量排名。具体来源、默认值与组件对应关系见 default-profile.md。
 
-Forme 工作台参考 shadcn Create，保留浅色参数侧栏与宽预览画布。桌面侧栏宽 368px，中等窗口为 336px；常用选项能并排时保留一行，空间不足时整组选项换到下一行。以上只作用于工作台配置区，不改变导出项目的视觉标准。工具栏收为两行，面板间距与画布留白 16px；两栏各自滚动，使用 overscroll-behavior: contain 防止串滚、scrollbar-gutter: stable 保持切换分类后的内容宽度。默认展示十五组可交互组件与数据表，包含图表、表单、通知、列表、滑块与范围选择。所有配置、预览、规则和导出都在一页内完成；不收集项目名称或需求文本。常用区提供八套配色与十组选择，按字体与排版、布局与外观、动效分组并默认展开；全部二十四套配色可在可搜索的“全部预设”查看。进阶区将 57 组选择按外观、布局、图标、动效、交互与细节分组。配置不要求输入原始颜色、数值或代码。
+## 原生组件与配置
 
-选项和行为的唯一来源：
-- option-catalog.ts：中文名称、合法选项、整套预设和配置更新。
-- interface-options.ts：默认值与语义 CSS 变量、图标和动画映射。
-- default-config.json：当前网页的统一默认选项，供首次进入、补齐旧字段、恢复默认和导出项目使用。
-- theme.ts：旧配置补齐、业务信息剥离、颜色解析、主题应用与 CSS 导出。
-- frontend-standard.ts：按实际配置生成可复制的前端标准，包含精确版本、完整配置与实现映射。
+基础组件位于 src/components/ui，由固定版本 shadcn CLI 生成。所有控件保留原生变体、尺寸、语义和状态；不再维护独立的 preset-controls.css，也不再覆盖焦点、字重、悬停、阴影、输入框填充或表格边线。
 
-文字根字号可选 14 / 16 / 18px；圆角可选直角、微圆、适中、柔和与圆润，默认柔和 0.625rem。卡片默认轻阴影。内容密度、留白、侧栏及内容宽度使用固定预设。图标可选 14 / 16 / 20px 和 1.5 / 2 / 2.5 线宽，通过 LucideProvider 与共享主题生效。
+configured-components.tsx 只负责六类原生参数映射：Button 的 variant / size、ToggleGroup 的 variant / size、TabsList 的 variant、SelectContent 的定位、Dialog 的外部交互策略和 Tooltip 的 side。明确传入的参数优先。Card、Input、Field、Checkbox、Switch、Slider、Table 等直接引用 registry 组件。
 
-动效提供淡入、轻移、缩放，100 / 160 / 280ms，以及两种缓动；始终遵循系统减少动态效果。分栏支持左右/上下、三种比例、尺寸记忆；拖拽支持手柄/整卡、提示强度与顺序记忆。Zustand 应用偏好可选择 localStorage 长期保存或 sessionStorage 当前会话保存。设计标准本身始终在本机自动保存。
+工作台配置区、顶部按钮、Accordion 分组、Tabs 页签、配色色卡、Dialog 弹窗与右侧示例共用这些基础组件。工作台 Card 容器使用 gap-0 / py-0 组织工具布局；CSS 只承担排列、滚动、响应式和示例画布布局。左侧不显示额外实现说明。
 
-响应式预览使用同源 iframe，复用真实组件、表单、弹窗和库实现。ResizeObserver 报告实际内容高度，iframe 外框采用 content-box，避免边框挤占视口而产生多余滚动条。右侧不写死高度，也不保留空白占位；弹窗按父页面可见预览区域居中。手机列表展示为卡片，平板导航占满可用宽度。电脑自适应，平板 768px，手机 390px，浏览器实际视口与所选尺寸一致。主题通过 storage 事件在工作台与预览文档间同步。技术栈和前端标准弹窗限制在视口内，标题与关闭区固定，内容内部滚动。
+## 默认值与可调整项
 
-前十二套配色来源于 tweakcn，新增十二套来自已安装的官方 Tailwind CSS 4.3.3 色阶，包含 Zinc、Slate、Gray、Stone、Indigo、Emerald、Sky、Cyan、Red、Pink、Yellow 和 Lime。采用 shadcn 的语义映射，浅暗两套均维护文字、背景、边框与图表色；切换颜色不会覆盖其他选项。应用组织参考 shadcn-admin。来源、固定提交和许可证见 third-party/。组件预览与导出的项目模板使用同一份源码，不能用截图或假状态替代实际效果。
+唯一基线为 default-config.json。首次进入、旧数据补齐、恢复默认、复制标准和模板共用它；index.css 的首屏颜色逐项接受 check:defaults 校验。旧版配置 v8 迁移后丢弃已取消的外观覆盖，原生参数和主题值保留兼容映射；用户仍可手动调整现有选项。
 
-下拉框使用 Radix Select 原生 popper 定位，从选择框下方展开，左边和宽度跟随触发器，最高 320px；内容超出时在列表内滚动，空间不足由原生碰撞检测调整。保留色卡、键盘导航、选中项与 Esc 关闭。
+41 组选项分为：外观 7、布局 4、图标 2、动效 4、交互 7、细节 17。细节仅保留真实的原生变体、参数或组件组合：选项组、页签、按钮、表单校验与必填、文案、按钮尺寸、内容切换、加载、错误位置、消息位置/时长/关闭按钮、空状态、弹窗关闭与提示延迟/方向。
 
-经典黑白的暗色采用 Radix Colors 官方 grayDark：页面为 Gray 2，卡片与侧栏为 Gray 3，控件底色与选中底色为 Gray 4/5，分隔为 Gray 6，输入边框为 Gray 7，焦点为 Gray 8，次要与正文文字为 Gray 11/12。共享语义变量映射到已有 shadcn 组件，不新增配色库；来源提交和 MIT 许可保留在 third-party。浅色与其他配色维持各自来源。
+默认根字号 16px、圆角 0.625rem；Card 原生 24px 内边距、shadow-xs 与 ring；Button 默认 36px；FieldGroup 原生 28px；输入文本 400，Button/Label/Tabs 原生 500；原生 focus-visible 焦点、悬停与禁用。Tooltip 默认 0ms；Sonner 默认右下、4 秒、无关闭按钮。明暗两套均使用 Neutral 语义分层。
 
-工作台外壳始终使用固定 中性黑白、Geist 与 16px 根字号；项目预设只应用于 iframe 和导出模板。全部配色预设只换颜色，保留字号、字体、布局、圆角与高级选项。
+布局间距只映射容器 gap 为 12 / 16 / 24px，不调整原生卡片和表格的留白。按钮与 ToggleGroup 使用 sm / default / lg；其他组件保留自身原值。图标尺寸和线宽仅通过 Lucide 原生 Provider 调整，控件内部图标尺寸由控件决定。--spacing 始终为 4px。
 
-切换配置时保持 iframe 与表格单元格实例，主题只更新变化的 CSS 变量。公共控件仅对视觉状态属性做过渡，不对宽高、字号和间距做 transition-all，字号与密度在一次布局中直接生效；示例图表不重播进场动画。主动选用的 Motion 演示仍遵循用户动效与减少动态效果设置。
+## 预览与导出
 
-Tailwind 基础尺寸单位 --spacing 固定为 4px。内容密度仅映射卡片内边距（24/28/32px）、布局间距（16/20/24px）与表格行留白，不改变图标、头像、复选框、开关或滑块的固有几何。字号使用 14/16/18px；控件高度独立使用 32/36/40px；圆角使用 16px 基准将存储的 rem 值映射为固定像素，避免文字放大时开关、图表和边框尺寸被重复缩放。分段浮起默认选中并排在第一位，配色色卡仍保持独立卡片，不受选项组样式影响。
+桌面两栏各自滚动，稳定预留滚动条，避免串滚与切换宽度抖动。工作台宽度、工具栏排列是编辑器布局，不作为业务项目的强制布局。iframe 沿用已加载文档，通过受来源校验的消息切换示例并报告内容高度；颜色变量只更新变化项。字号与间距不插值几何，图表关闭重复入场动画。
 
-选项组默认使用分段浮起，也保留柔和或清晰描边；不追加装饰勾。默认柔和描边为前景色与底色按 40% 混合；字重保持常规。分段浮起参考 shadcn Tabs 的底板与白底轻阴影选中态，在 PresetToggleGroup 中组合，适用于少量、短标签、彼此相关的 ToggleGroup 选项；不把独立操作按钮、复选框、开关、下拉选项或表格行替换成此样式。Tabs 内容分页有独立的标签切换设置，键盘语义仍由 Radix 管理。操作成功、复选框和可访问选择器内部的语义图标保留其实际用途。
+表单由 RHF + Zod 管理，表格由 TanStack Table 管理；图表、消息、分栏与拖拽分别复用 Recharts、Sonner、react-resizable-panels 和 dnd-kit。shadcn 已有的部分不另写替代组件。不存在对应组件的业务布局和拖放区域使用语义变量与成熟库组合。
 
-基础 ui 组件不读取项目配置，预设由 PresetButton、PresetInput、PresetToggleGroup 等适配器使用原生组件组合；状态外观限于 preset-* 类，避免全局 data-slot 覆盖。图表使用 ChartContainer、ChartTooltipContent 和 Recharts accessibilityLayer；加载使用原生 Spinner。
-
-界面细节共 28 组，采用 shadcn/Radix 的控件、焦点与弹窗行为、RHF 校验时机，以及 Sonner 原生消息位置、停留时间和关闭按钮。Button、Input、Select、Table、Empty、Dialog 和 Tooltip 均使用共享组件实现。所有选项在界面细节示例、复制标准与独立模板中同步生效；工作台自身使用固定、轻量的默认值。共享上下文 InterfaceOptionsProvider 提供文案详略、校验位置、加载反馈等组件行为，CSS 变量控制字重、焦点、选中、悬停、禁用、间距、分隔、控件高度、弹窗与遮罩。
-
-操作图标另有点击、悬停或关闭，以及等待时持续旋转或静止两组选项。ActionButton 用 Motion 只旋转图标，按钮文字与尺寸保持稳定，pending 对应真实等待状态；刷新与重播不增加人为延迟。主题动效开关与系统 prefers-reduced-motion 即时生效。技术栈弹窗的依赖项使用整行 Collapsible 与语义 Table，内容区始终预留滚动条，展开不会移动上方两列。
-
-更改细节选项后，预览顶部立即展示所选字段与对应组件状态。字重、间距、选中、禁用、文案、分隔与高度直接应用共享变量；焦点和悬停使用标明用途的静态状态展示，不改变用户操作位置；校验使用 RHF + Zod 的真实无效输入，骨架和行内反馈直接展示，Motion 和 Radix 提示支持重播。消息与弹窗先在局部区域示意位置、宽度和遮罩，并提供打开真实 Sonner/Radix 组件的操作，不自动阻挡左侧配置。
+generation-rules.md 是复制标准、规则弹窗和模板 AGENTS.md 的共同来源。frontend-standard.ts 从实际配置和 option-catalog.ts 生成说明与完整 JSON。浏览器 ZIP 与命令行模板共用同一生成器和组件源码。

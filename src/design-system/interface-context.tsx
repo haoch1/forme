@@ -1,28 +1,12 @@
-import { createContext, useContext, useSyncExternalStore, type ReactNode } from "react";
+import { createContext, useContext, type ReactNode } from "react";
 import { defaultInterface, type InterfaceOptions } from "./interface-options";
 
-const reducedMotionQuery = "(prefers-reduced-motion: reduce)";
-function subscribeReducedMotion(callback: () => void) {
-  const media = window.matchMedia(reducedMotionQuery);
-  media.addEventListener("change", callback);
-  return () => media.removeEventListener("change", callback);
-}
-const getReducedMotion = () => window.matchMedia(reducedMotionQuery).matches;
-const getServerReducedMotion = () => true;
-
 const InterfaceContext = createContext<InterfaceOptions>(defaultInterface);
-const MotionPreferenceContext = createContext(true);
-export function InterfaceOptionsProvider({ options, children, motionEnabled = true }: { options: InterfaceOptions; children: ReactNode; motionEnabled?: boolean }) {
-  return <MotionPreferenceContext.Provider value={motionEnabled}><InterfaceContext.Provider value={options}>{children}</InterfaceContext.Provider></MotionPreferenceContext.Provider>;
+export function InterfaceOptionsProvider({ options, children }: { options: InterfaceOptions; children: ReactNode }) {
+  return <InterfaceContext.Provider value={options}>{children}</InterfaceContext.Provider>;
 }
 // eslint-disable-next-line react-refresh/only-export-components
 export function useInterfaceOptions() { return useContext(InterfaceContext); }
-// eslint-disable-next-line react-refresh/only-export-components
-export function useActionMotionEnabled() {
-  const enabled = useContext(MotionPreferenceContext);
-  const reduced = useSyncExternalStore(subscribeReducedMotion, getReducedMotion, getServerReducedMotion);
-  return enabled && !reduced;
-}
 export function DetailCopy({ short, full }: { short: string; full: string }) {
   const options = useInterfaceOptions();
   return options.copyStyle === "complete" ? full : short;

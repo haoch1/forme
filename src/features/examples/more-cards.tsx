@@ -1,4 +1,9 @@
-import { PresetCard as Card, PresetButton as Button, PresetCheckbox as Checkbox, PresetInput as Input, PresetFieldLabel as FieldLabel, PresetToggleGroup as ToggleGroup, PresetToggleGroupItem as ToggleGroupItem } from "@/components/preset-controls";
+import { Card } from "@/components/ui/card";
+import { ConfiguredButton as Button, ConfiguredToggleGroup as ToggleGroup } from "@/components/configured-components";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Input } from "@/components/ui/input";
+import { FieldLabel } from "@/components/ui/field";
+import { ToggleGroupItem } from "@/components/ui/toggle-group";
 import { useState } from "react";
 import { Area, AreaChart, CartesianGrid, XAxis, YAxis } from "recharts";
 import { ChartContainer, ChartTooltip, ChartTooltipContent, type ChartConfig } from "@/components/ui/chart";

@@ -43,7 +43,7 @@
     "generator": "shadcn 4.22.1",
     "style": "radix-vega",
     "license": "MIT",
-    "usage": "28 个官方 CLI registry 组件逐文件核对；20 个与官方源码一致，8 个仅保留显式视觉过渡、方向参数转发、可访问名称、中文关闭文案及语义遮罩变量补丁。预设在 components/preset-controls.tsx 与 design-system/preset-controls.css 组合，详见 docs/component-policy.md 与 shadcn-components.json。"
+    "usage": "32 个官方 CLI registry 组件及 use-mobile hook；默认 Vega / Neutral / Geist。原生组件直接复用，配置仅传递原生参数；删除控件状态 CSS 覆盖层，必要补丁见 shadcn-components.json。"
   },
   "radixColors": {
     "repository": "https://github.com/radix-ui/colors",
@@ -52,6 +52,6 @@
       "src/dark.ts"
     ],
     "license": "MIT",
-    "usage": "经典黑白暗色使用官方 grayDark 色阶：2 为页面底色，3 为卡片与侧栏，4/5 为控件与选中，6 为分隔，7 为输入边框，8 为焦点，11/12 为文字。仅映射语义主题变量，不增加依赖。"
+    "usage": "历史暗色方案参考来源，保留许可证与溯源；当前默认已统一为 shadcn Neutral。"
   }
 }

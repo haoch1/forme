@@ -1,4 +1,5 @@
-import { PresetCheckbox as Checkbox, PresetTableBody as TableBody, PresetTableCell as TableCell, PresetTableHead as TableHead, PresetTableHeader as TableHeader, PresetTableRow as TableRow } from "@/components/preset-controls";
+import { Checkbox } from "@/components/ui/checkbox";
+import { TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { useState } from "react";
 
 import { Table } from "@/components/ui/table";

@@ -12,6 +12,8 @@
     "lint": "eslint .",
     "check:stack": "node scripts/check-stack.mjs",
     "check:ui": "node scripts/check-ui.mjs",
+    "check:defaults": "node scripts/check-defaults.mjs",
+    "check:template": "node scripts/check-template.mjs",
     "template": "node scripts/create-project.mjs",
     "package:template": "node scripts/package-template.mjs"
   },

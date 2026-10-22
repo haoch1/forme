@@ -1,4 +1,7 @@
-import { PresetButton as Button, PresetInput as Input, PresetTextarea as Textarea, PresetFieldGroup as FieldGroup, PresetFieldLabel as FieldLabel } from "@/components/preset-controls";
+import { ConfiguredButton as Button } from "@/components/configured-components";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { FieldGroup, FieldLabel } from "@/components/ui/field";
 // Form organization adapted from satnaing/shadcn-admin; migrated to shadcn Field and local storage.
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";

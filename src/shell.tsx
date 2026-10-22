@@ -1,8 +1,7 @@
 import { useEffect } from "react";
-import { useInputMethod } from "@/lib/use-input-method";
 import { Outlet } from "@tanstack/react-router";
 import { MotionConfig } from "motion/react";
-import { Toaster } from "sonner";
+import { Toaster } from "@/components/ui/sonner";
 import { useThemeSync } from "@/stores/theme-store";
 import { applyThemeToDocument, initialTheme } from "@/design-system/theme";
 
@@ -13,7 +12,6 @@ export function AppShell() {
     applyThemeToDocument(initialTheme);
     document.title = "Forme · 前端风格工作台";
   }, []);
-  useInputMethod();
  return <MotionConfig reducedMotion="user">
     <div className="app-shell">
       <a href="#main-content" className="skip-link">跳到主要内容</a>

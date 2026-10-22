@@ -1,5 +1,11 @@
 import { Spinner } from "@/components/ui/spinner";
-import { PresetButton as Button, PresetCard as Card, PresetFieldGroup as FieldGroup, PresetFieldLabel as FieldLabel, PresetInput as Input, PresetSeparator as Separator, PresetToggleGroup as ToggleGroup, PresetToggleGroupItem as ToggleGroupItem, PresetTabsList as TabsList, PresetTabsTrigger as TabsTrigger, PresetDialogContent as DialogContent, PresetTooltipContent as TooltipContent } from "@/components/preset-controls";
+import { ConfiguredButton as Button, ConfiguredToggleGroup as ToggleGroup, ConfiguredTabsList as TabsList, ConfiguredDialogContent as DialogContent, ConfiguredTooltipContent as TooltipContent } from "@/components/configured-components";
+import { Card } from "@/components/ui/card";
+import { FieldGroup, FieldLabel } from "@/components/ui/field";
+import { Input } from "@/components/ui/input";
+import { Separator } from "@/components/ui/separator";
+import { ToggleGroupItem } from "@/components/ui/toggle-group";
+import { TabsTrigger } from "@/components/ui/tabs";
 import { useState } from "react";
 import { motion } from "motion/react";
 import { Check, Info } from "lucide-react";

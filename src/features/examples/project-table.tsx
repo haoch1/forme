@@ -1,5 +1,8 @@
 import { Spinner } from "@/components/ui/spinner";
-import { PresetButton as Button, PresetInput as Input, PresetCheckbox as Checkbox, PresetTableHeader as TableHeader, PresetTableBody as TableBody, PresetTableHead as TableHead, PresetTableRow as TableRow, PresetTableCell as TableCell, PresetDialogContent as DialogContent } from "@/components/preset-controls";
+import { ConfiguredButton as Button, ConfiguredDialogContent as DialogContent } from "@/components/configured-components";
+import { Input } from "@/components/ui/input";
+import { Checkbox } from "@/components/ui/checkbox";
+import { TableHeader, TableBody, TableHead, TableRow, TableCell } from "@/components/ui/table";
 // Table composition adapted from shadcn-admin tasks-table; local Query repository replaces API integration.
 import { useMemo, useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
@@ -16,8 +19,6 @@ import {
   ArrowDown,
   ArrowUp,
   ArrowUpDown,
-  ChevronLeft,
-  ChevronRight,
   MoreHorizontal,
   Plus,
   Download,
@@ -33,6 +34,7 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 
 import { Skeleton } from "@/components/ui/skeleton";
 import { Table } from "@/components/ui/table";
+import { Pagination, PaginationContent, PaginationItem, PaginationPrevious, PaginationNext } from "@/components/ui/pagination";
 import { Dialog, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuSeparator } from "@/components/ui/dropdown-menu";
 import { ProjectDetailsForm } from "./project-details-form";
@@ -369,24 +371,23 @@ export function ProjectTable({
             第 {table.getState().pagination.pageIndex + 1} /{" "}
             {Math.max(1, table.getPageCount())} 页
           </span>
-          <Button
-            size="icon-xs"
-            variant="outline"
+          <Pagination className="mx-0 w-auto" aria-label="项目分页"><PaginationContent><PaginationItem><PaginationPrevious
+            size={options.controlSize}
             aria-label="上一页"
-            disabled={!table.getCanPreviousPage()}
-            onClick={() => table.previousPage()}
-          >
-            <ChevronLeft />
-          </Button>
-          <Button
-            size="icon-xs"
-            variant="outline"
+            href="#"
+            aria-disabled={!table.getCanPreviousPage()}
+            tabIndex={table.getCanPreviousPage() ? 0 : -1}
+            className="aria-disabled:pointer-events-none aria-disabled:opacity-50"
+            onClick={(event) => { event.preventDefault(); if (table.getCanPreviousPage()) table.previousPage(); }}
+          /></PaginationItem><PaginationItem><PaginationNext
+            size={options.controlSize}
             aria-label="下一页"
-            disabled={!table.getCanNextPage()}
-            onClick={() => table.nextPage()}
-          >
-            <ChevronRight />
-          </Button>
+            href="#"
+            aria-disabled={!table.getCanNextPage()}
+            tabIndex={table.getCanNextPage() ? 0 : -1}
+            className="aria-disabled:pointer-events-none aria-disabled:opacity-50"
+            onClick={(event) => { event.preventDefault(); if (table.getCanNextPage()) table.nextPage(); }}
+          /></PaginationItem></PaginationContent></Pagination>
         </div>
       </div>
       <Dialog
